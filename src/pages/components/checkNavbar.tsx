@@ -3,7 +3,7 @@ import LoggedNavbar from "./loggedNavbar";
 import Navbar from "./navbar";
 
 function CheckNavbar() {
-  // console.log("CheckNavbar rendered");
+  console.log("CheckNavbar rendered");
   const loggedIn = false;
   return loggedIn ? <LoggedNavbar /> : <Navbar />;
 }

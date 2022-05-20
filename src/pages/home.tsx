@@ -1,7 +1,6 @@
 import React from "react";
-import CheckNavbar from "./checkNavbar";
-import HomeInfoCardContainer from "./homeInfoCardContainer";
-import Navbar from "./navbar";
+import CheckNavbar from "./components/checkNavbar";
+import HomeInfoCardContainer from "./components/homeInfoCardContainer";
 
 function Home() {
   //console.log("home rendered");

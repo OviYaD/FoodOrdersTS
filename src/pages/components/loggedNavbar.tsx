@@ -78,4 +78,4 @@ function LoggedNavbar() {
   );
 }
 
-export default React.memo(LoggedNavbar);
+export default LoggedNavbar;

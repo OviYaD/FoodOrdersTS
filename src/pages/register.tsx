@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { async } from "@firebase/util";
 
 const usersCollectionRef = collection(db, "users");
 
 function Register() {
   const [user, setUser] = useState({ mail: "", psd: "", addr: "" });
   const [msg, setMsg] = useState("");
-  const [users, checkuser] = useState([]);
   const navigate = useNavigate();
 
   const changeMe = (e: any) => {
