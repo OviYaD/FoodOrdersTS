@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
@@ -8,7 +8,11 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const usersCollectionRef = collection(db, "users");
 
 function Register() {
-  const [user, setUser] = useState({ mail: "", psd: "", addr: "" });
+  const [user, setUser] = useState({
+    mail: "admin@gmail.com",
+    psd: "123456",
+    addr: "address",
+  });
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
@@ -31,10 +35,18 @@ function Register() {
     const { mail, psd, addr } = user;
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, mail, psd)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
+      .then(async (userCredential) => {
+        console.log("Registered");
+        try {
+          const docRef = await addDoc(usersCollectionRef, {
+            mail: mail,
+            address: addr,
+          });
+          console.log("Document written with ID: ", docRef.id);
+          navigate("/");
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
       })
       .catch((error) => {
         const errorCode = error.code;

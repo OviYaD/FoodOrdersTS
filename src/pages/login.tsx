@@ -1,26 +1,22 @@
 import React, { useState } from "react";
-import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const usersCollectionRef = collection(db, "users");
-
 function Login() {
-  const navigate = useNavigate();
-  const [userLogin, setUserLogin] = useState({ mail: "", psd: "" });
+  const [userLogin, setUserLogin] = useState({
+    mail: "admin@gmail.com",
+    psd: "123456",
+  });
   const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
 
   const onLogin = async (e: any) => {
     e.preventDefault();
-    console.log(userLogin);
 
     const auth = getAuth();
     signInWithEmailAndPassword(auth, userLogin.mail, userLogin.psd)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
+      .then((userCred) => {
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
