@@ -2,12 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const usersCollectionRef = collection(db, "users");
 
 function Login() {
   const navigate = useNavigate();
   const [userLogin, setUserLogin] = useState({ mail: "", psd: "" });
+  const [msg, setMsg] = useState("");
   let flag = false;
   //console.log("login rendered");
 
@@ -27,53 +29,24 @@ function Login() {
   //     }
   //   }, [loggedIn]);
 
-  const checkCred = async (e: any) => {
-    flag = true;
+  const onLogin = async (e: any) => {
     e.preventDefault();
-    // console.log(userLogin);
-    let users;
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      users = data.docs.map((doc) => doc.data());
-      //   console.log(users);
-      let out = "false";
-      let psd;
-      const res = users.map((use, id) => {
-        // console.log(use.email);
-        console.log(userLogin["mail"]);
-        console.log(userLogin["psd"]);
-        console.log(use.email);
-        console.log(use.password);
-        console.log(use.email.includes(userLogin["mail"]));
-        console.log(out);
-        if (
-          use.email.includes(userLogin["mail"]) &&
-          use.password === userLogin["psd"]
-        ) {
-          //   out = true;
+    console.log(userLogin);
 
-          return;
-        } else {
-          return "false";
-        }
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, userLogin.mail, userLogin.psd)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setMsg(errorMessage);
       });
-      // console.log("out=", out === true);
-      //   if (out) {
-      //     flag = false;
-      //     iL.method({
-      //       type: "checkUser",
-      //       payload: data,
-      //       user: userLogin,
-      //     });
-      //   } else {
-      //     flag = false;
-      //     alert("Please enter valid credentials");
-      //   }
-    };
-
-    getUsers();
   };
-  const loginMe = (e: any) => {
+  const onChange = (e: any) => {
     const { name, value } = e.target;
     setUserLogin({
       ...userLogin,
@@ -82,7 +55,7 @@ function Login() {
   };
   return (
     <>
-      <form className="form1" onSubmit={checkCred}>
+      <form className="form1" onSubmit={onLogin}>
         <h2>Login</h2>
         <br />
         <div className="form-group d-flex flex-column g-2">
@@ -94,7 +67,7 @@ function Login() {
             name="mail"
             className="form-control-lg"
             value={userLogin.mail}
-            onChange={loginMe}
+            onChange={onChange}
             placeholder="Email"
             required
           />
@@ -108,13 +81,13 @@ function Login() {
             name="psd"
             className="form-control-lg"
             value={userLogin.psd}
-            onChange={loginMe}
+            onChange={onChange}
             placeholder="Password"
             required
           />
         </div>
         <button className="btn btn-primary btn-lg m-3 ms-0">Sign in</button>
-        {/* {msg  && <span style={{color:'red',padding:'5px'}}>{msg}</span> } */}
+        {msg && <span style={{ color: "red", padding: "5px" }}>{msg}</span>}
         <hr />
         <span>
           Don't have an account? | <Link to="/register">Register Here</Link>
