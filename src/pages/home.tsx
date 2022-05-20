@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CheckNavbar from "./components/checkNavbar";
 import Footer from "./components/Footer";
 import HomeInfoCardContainer from "./components/homeInfoCardContainer";

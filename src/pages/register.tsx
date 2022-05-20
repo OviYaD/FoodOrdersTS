@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-const usersCollectionRef = collection(db, "users");
+import { User, userConverter } from "../models/user";
 
 function Register() {
   const [user, setUser] = useState({
@@ -38,11 +37,12 @@ function Register() {
       .then(async (userCredential) => {
         console.log("Registered");
         try {
-          const docRef = await addDoc(usersCollectionRef, {
-            mail: mail,
-            address: addr,
-          });
-          console.log("Document written with ID: ", docRef.id);
+          await setDoc(
+            doc(db, "users", userCredential.user.uid).withConverter(
+              userConverter
+            ),
+            new User(userCredential.user.uid, "Raveen", mail, addr)
+          );
           navigate("/");
         } catch (e) {
           console.error("Error adding document: ", e);
