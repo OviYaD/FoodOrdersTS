@@ -1,15 +1,18 @@
-import React, { useContext, useEffect, useCallback } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { CartItem } from "../models/cartItem";
-import { cartItemsState, loginState, productState } from "../recoil/atoms";
+import { cartItemsState } from "../recoil/atoms";
 
 function Cart() {
   //console.log("Cart rendered");
   const cartItems: CartItem[] = useRecoilValue(cartItemsState);
-  console.log(cartItems);
-  const totalCost = 0;
-  const totalItems = 0;
+  let totalCost = 0;
+  const totalItems = cartItems.length;
+
+  cartItems.forEach((item: CartItem) => {
+    totalCost += item.product.price * item.quantity;
+  });
 
   const navigate = useNavigate();
 
