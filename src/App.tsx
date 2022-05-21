@@ -10,6 +10,8 @@ import { productCollectionRef, db } from "./firebase";
 import { doc, getDoc, getDocs } from "firebase/firestore";
 import { User, userConverter } from "./models/user";
 import { kill } from "process";
+import { Product } from "./models/product";
+import Menu from "./pages/Menu";
 
 function App() {
   const [isLoggedIn, setIsLoggedin] = useRecoilState(loginState);
@@ -31,9 +33,23 @@ function App() {
         }
 
         getDocs(productCollectionRef).then((querySnapshot: any) => {
-          const tempProducts: any[] = [];
+          let tempProducts: any = {
+            breakfast: [],
+            lunch: [],
+            dinner: [],
+          };
           querySnapshot.forEach((doc: any) => {
-            tempProducts.push(doc.data());
+            const prod: Product = doc.data();
+
+            if (prod.category.includes("breakfast")) {
+              tempProducts.breakfast.push(prod);
+            }
+            if (prod.category.includes("lunch")) {
+              tempProducts.lunch.push(prod);
+            }
+            if (prod.category.includes("dinner")) {
+              tempProducts.dinner.push(prod);
+            }
           });
           console.log(tempProducts);
           setProducts(tempProducts);
@@ -54,6 +70,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
+        <Route path="/menu" element={<Menu />}></Route>
       </Routes>
     </BrowserRouter>
   );

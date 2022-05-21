@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { Product } from "../models/product";
+import { ProductCollection, productState } from "../recoil/atoms";
 import MenuCard from "./MenuCard";
-//import {itemContext} from '../App';
 
 function RestaurantMenu() {
-  // const [items,setitems]=useState(store.get('items') ?? []);
-  // const [loading,setLoading]=useState(store.get('loading') ?? true);
-  // const [error, setError]=useState(store.get('error') ?? '');
+  const products: any = useRecoilValue(productState);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   //   useEffect(()=>{
   //     //console.log("Restaurant menu rendered");
-  //     if(items.length ===0){
+  //     if(products.length ===0){
   //     axios.get('https://my-json-yumito-server.herokuapp.com/menu')
   //     .then(response =>{
   //       store.set('error', '');
   //       store.set('loading', false);
-  //       store.set('items', response.data);
+  //       store.set('products', response.data);
   //       setLoading(false);
   //       setError('');
-  //       setitems(response.data);
+  //       setproducts(response.data);
   //     })
   //     .catch((e)=>{
   //       store.set('loading', false);
@@ -25,21 +27,21 @@ function RestaurantMenu() {
   //       setError(e.message);
   //     })
   //   }
-  // },[items])
+  // },[products])
 
   return error !== "" ? (
     <h2 className="text-center text-danger border border-dark p-2 position-absolute top-50 start-50 translate-middle">{`${error}. Please try after sometime`}</h2>
   ) : loading === false ? (
     <div className="container-fluid menuLayout">
-      {items &&
-        items.map((item) => (
-          <div key={item.id} className="container d-flex flex-column">
-            <div className="h3 tt" id={item.category}>
+      {products &&
+        products.map((item: Product) => (
+          <div key={item.name} className="container d-flex flex-column">
+            <div className="h3 tt" id={item.category[0]}>
               {item.category}
             </div>
             <div className="menuCardWrapper d-flex flex-wrap">
-              {item.items &&
-                item.items.map((i) => <MenuCard data={i} key={i.id} />)}
+              {item.products &&
+                item.products.map((i) => <MenuCard data={i} key={i.id} />)}
             </div>
           </div>
         ))}

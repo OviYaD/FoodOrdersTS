@@ -12,7 +12,17 @@ export const userInfoState = atom({
   default: new User(),
 });
 
+export interface ProductCollection {
+  breakfast: Product[];
+  lunch: Product[];
+  dinner: Product[];
+}
+
 export const productState = atom({
   key: "productState",
-  default: [new Product()],
+  default: {
+    breakfast: [],
+    lunch: [],
+    dinner: [],
+  },
 });

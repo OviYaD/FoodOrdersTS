@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import Cart from "./Cart";
 import CategoryBar from "./CategoryBar";
 import RestaurantMenu from "./RestaurantMenu";
