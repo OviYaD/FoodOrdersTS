@@ -8,6 +8,14 @@ export class Product {
   toString() {
     return this.name + ", " + this.price + ", " + this.category;
   }
+  toMap() {
+    return {
+      name: this.name,
+      price: this.price,
+      category: this.category,
+      type: this.type,
+    };
+  }
 }
 
 // Firestore data converter

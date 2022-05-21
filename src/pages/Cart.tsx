@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { loginState, productState } from "../recoil/atoms";
+import { CartItem } from "../models/cartItem";
+import { cartItemsState, loginState, productState } from "../recoil/atoms";
 
 function Cart() {
   //console.log("Cart rendered");
-  const list: any[] = useRecoilValue(productState).breakfast;
-  console.log(list);
+  const cartItems: CartItem[] = useRecoilValue(cartItemsState);
+  console.log(cartItems);
   const totalCost = 0;
   const totalItems = 0;
 
@@ -24,7 +25,7 @@ function Cart() {
   };
   return (
     <>
-      {list.length && (
+      {cartItems.length && (
         <div className="cartNav bg-body p-2 text-dark border-top">
           <div className="container-cart p-2 d-flex flex-column">
             <div className="d-flex justify-content-between align-items-center">
@@ -62,7 +63,7 @@ function Cart() {
           </div>
         </div>
       )}
-      {list.length && (
+      {cartItems.length && (
         <div
           className="offcanvas offcanvas-bottom"
           //   tabIndex="-1"
@@ -86,21 +87,17 @@ function Cart() {
           <div className="offcanvas-body small">
             <table className="table">
               <tbody>
-                {list.map((l) => (
-                  <tr key={l.itemName}>
+                {cartItems.map((l: CartItem) => (
+                  <tr key={l.product.name}>
                     <td className="h5">
                       <span>
                         <i
                           className={`bi bi-circle-fill ${
-                            l.vegan === "veg"
-                              ? "greenColor"
-                              : l.vegan === "Non veg"
-                              ? "redColor"
-                              : "yellowColor"
+                            l.product.type === "veg" ? "greenColor" : "redColor"
                           }`}
                         ></i>
                       </span>
-                      {l.itemName}
+                      {l.product.name}
                     </td>
                     <td>
                       <div className="btn-group btn-group-sm">
@@ -119,7 +116,7 @@ function Cart() {
                         </button>
                       </div>
                     </td>
-                    <td>&#8377;{l.quantity * l.price}</td>
+                    <td>&#8377;{l.quantity * l.product.price}</td>
                   </tr>
                 ))}
               </tbody>

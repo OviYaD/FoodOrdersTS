@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { CartItem } from "../models/cartItem";
 import { Product } from "../models/product";
 import { User } from "../models/user";
 
@@ -9,20 +10,19 @@ export const loginState = atom({
 
 export const userInfoState = atom({
   key: "userInfoState",
-  default: new User(),
+  default: null as unknown as User,
 });
-
-export interface ProductCollection {
-  breakfast: Product[];
-  lunch: Product[];
-  dinner: Product[];
-}
 
 export const productState = atom({
   key: "productState",
   default: {
-    breakfast: [],
-    lunch: [],
-    dinner: [],
+    breakfast: [] as Product[],
+    lunch: [] as Product[],
+    dinner: [] as Product[],
   },
+});
+
+export const cartItemsState = atom({
+  key: "cartItemsState",
+  default: [] as CartItem[],
 });

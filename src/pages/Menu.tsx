@@ -1,6 +1,8 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
+import { CartItem } from "../models/cartItem";
+import { cartItemsState } from "../recoil/atoms";
 import Cart from "./Cart";
-import CategoryBar from "./CategoryBar";
 import CheckNavbar from "./components/checkNavbar";
 import RestaurantMenu from "./RestaurantMenu";
 
@@ -8,7 +10,7 @@ function Menu() {
   //console.log("menu rendered");
   // navbar scrollup and down logic
   //let prev= window.scrollY;
-  const list: any[] = [];
+  const list: CartItem[] = useRecoilValue(cartItemsState);
   return (
     <div>
       <CheckNavbar />

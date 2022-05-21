@@ -1,9 +1,15 @@
 import React from "react";
+import { useRecoilState } from "recoil";
+import { CartItem } from "../models/cartItem";
+import { Product } from "../models/product";
+import { cartItemsState } from "../recoil/atoms";
 
 function MenuCard({ data }: any) {
-  //console.log("menucard rendered");
+  const [cartItems, setCartItems] = useRecoilState(cartItemsState);
 
-  const sendId = (id: any) => {};
+  const addToCart = (data: Product) => {
+    setCartItems([...cartItems, new CartItem(data, 1)]);
+  };
 
   const increment = () => {};
 
@@ -21,7 +27,7 @@ function MenuCard({ data }: any) {
       <div
         key={data.name}
         className="menuCard d-flex justify-content-between flex-wrap"
-        onClick={() => sendId(data.name)}
+        onClick={() => addToCart(data)}
       >
         <div className="d-flex flex-column itemDescription">
           <div>
