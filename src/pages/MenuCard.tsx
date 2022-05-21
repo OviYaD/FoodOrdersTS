@@ -1,22 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 
-function MenuCard({ data }) {
+function MenuCard({ data }: any) {
   //console.log("menucard rendered");
-  const iL = useContext(itemContext);
 
-  const sendId = (id) => {
-    iL.method({ type: "set_id", payload: id });
-  };
+  const sendId = (id: any) => {};
 
-  const increment = () => {
-    iL.method({ type: "addItem", payload: data });
-    iL.method({ type: "getTotalItems" });
-  };
+  const increment = () => {};
 
   const colorCircle =
-    data.vegan.toLowerCase() === "veg" ? (
+    data.type.toLowerCase() === "veg" ? (
       <i className="bi bi-circle-fill greenColor"></i>
-    ) : data.vegan.toLowerCase() === "egg" ? (
+    ) : data.type.toLowerCase() === "egg" ? (
       <i className="bi bi-circle-fill yellowColor"></i>
     ) : (
       <i className="bi bi-circle-fill redColor"></i>
@@ -25,17 +19,17 @@ function MenuCard({ data }) {
   return (
     <>
       <div
-        key={data.id}
+        key={data.name}
         className="menuCard d-flex justify-content-between flex-wrap"
-        onClick={() => sendId(data.id)}
+        onClick={() => sendId(data.name)}
       >
         <div className="d-flex flex-column itemDescription">
           <div>
             <div className="h5">{data.itemName}</div>
             <div>
-              {colorCircle} {data.vegan}
+              {colorCircle} {data.type}
             </div>
-            <div>{data.description ?? ""}</div>
+            <div>{data.name ?? ""}</div>
           </div>
           <div className="py-2">&#8377;{`${data.price}.00`}</div>
           <button
@@ -52,19 +46,9 @@ function MenuCard({ data }) {
             className="img-fluid img-rounded"
             src={
               data.img ??
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQVua1higrnAKxEJ8ufI9iIJ8Y3_-DGUBEoA&usqp=CAU"
+              "https://media.istockphoto.com/photos/table-top-view-of-spicy-food-picture-id1316145932?b=1&k=20&m=1316145932&s=170667a&w=0&h=feyrNSTglzksHoEDSsnrG47UoY_XX4PtayUPpSMunQI="
             }
           />
-          {data.tag !== "" ? (
-            <span
-              className="position-absolute top-0 end-0 bg-primary badge"
-              style={{ padding: "5px" }}
-            >
-              {data.tag}
-            </span>
-          ) : (
-            ""
-          )}
         </div>
       </div>
     </>

@@ -41,7 +41,7 @@ function LoggedNavbar() {
               className="position-absolute translate-middle badge rounded-circle bg-danger"
               style={{ fontSize: ".45em" }}
             >
-              {totalItems !== 0 ? totalItems : null}
+              {totalItems}
             </span>
           </i>
         </div>

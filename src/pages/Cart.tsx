@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { loginState } from "../recoil/atoms";
+import { loginState, productState } from "../recoil/atoms";
 
 function Cart() {
   //console.log("Cart rendered");
-  const isLoggedIn = useRecoilValue(loginState);
-  const list: any[] = [];
+  const list: any[] = useRecoilValue(productState).breakfast;
+  console.log(list);
   const totalCost = 0;
   const totalItems = 0;
 

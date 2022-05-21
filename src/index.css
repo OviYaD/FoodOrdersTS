@@ -302,7 +302,6 @@ a.hoverMe:hover {
   padding-bottom: 55px !important;
   position: absolute;
   top: 100px;
-  min-height: 200vh;
 }
 .modal-header {
   /* z-index:3000; */

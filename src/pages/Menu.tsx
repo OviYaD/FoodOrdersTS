@@ -1,6 +1,7 @@
 import React from "react";
 import Cart from "./Cart";
 import CategoryBar from "./CategoryBar";
+import CheckNavbar from "./components/checkNavbar";
 import RestaurantMenu from "./RestaurantMenu";
 
 function Menu() {
@@ -10,9 +11,10 @@ function Menu() {
   const list: any[] = [];
   return (
     <div>
-      <CategoryBar />
+      <CheckNavbar />
       <RestaurantMenu />
       {list && (list.length > 0 ? <Cart /> : <></>)}
+      {/* <Cart /> */}
     </div>
   );
 }
