@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { CartItem } from "../models/cartItem";
 import { cartItemsState } from "../recoil/atoms";
 
 function Cart() {
   //console.log("Cart rendered");
-  const cartItems: CartItem[] = useRecoilValue(cartItemsState);
+  const [cartItems, setCartItems] = useRecoilState(cartItemsState);
   let totalCost = 0;
   const totalItems = cartItems.length;
 
@@ -20,9 +20,34 @@ function Cart() {
     (document.getElementById("clrCart") as HTMLElement).classList.add("vs");
   };
 
-  const clearCart = () => {};
-  const increment = (data: any) => {};
-  const decrement = (data: any) => {};
+  const clearCart = () => {
+    (document.getElementById("clrCart") as HTMLElement).classList.remove("vs");
+    setCartItems([]);
+  };
+  const increment = (data: CartItem) => {
+    let newList = [...cartItems].map((item: CartItem) => {
+      if (item.product.name === data.product.name) {
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      } else return item;
+    });
+    setCartItems(newList);
+  };
+  const decrement = (data: CartItem) => {
+    let newList = [...cartItems]
+      .map((item: CartItem) => {
+        if (item.product.name === data.product.name) {
+          return {
+            ...item,
+            quantity: item.quantity - 1,
+          };
+        } else return item;
+      })
+      .filter((item: CartItem) => item.quantity !== 0);
+    setCartItems(newList);
+  };
   const authorize = () => {
     return navigate("/checkout");
   };
