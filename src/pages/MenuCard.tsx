@@ -8,10 +8,21 @@ function MenuCard({ data }: any) {
   const [cartItems, setCartItems] = useRecoilState(cartItemsState);
 
   const addToCart = (data: Product) => {
-    setCartItems([...cartItems, new CartItem(data, 1)]);
-  };
+    let itemFound = false;
+    let newList = [...cartItems].map((item: CartItem) => {
+      if (item.product.name === data.name) {
+        itemFound = true;
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      } else return item;
+    });
 
-  const increment = () => {};
+    if (!itemFound) newList.push(new CartItem(data, 1));
+
+    setCartItems(newList);
+  };
 
   const colorCircle =
     data.type.toLowerCase() === "veg" ? (
@@ -41,7 +52,7 @@ function MenuCard({ data }: any) {
           <button
             type="button"
             className="btn btn-outline-warning mt-auto p-2 w-50 addCart"
-            onClick={increment}
+            onClick={() => addToCart(data)}
           >
             Add to cart
           </button>
