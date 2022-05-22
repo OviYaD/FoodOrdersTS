@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { clearCart, updateCartItem } from "../../firestore";
@@ -8,6 +8,7 @@ import { cartItemsState } from "../../recoil/atoms";
 function Cart() {
   //console.log("Cart rendered");
   const [cartItems, setCartItems] = useRecoilState(cartItemsState);
+
   let totalCost = 0;
   const totalItems = cartItems.length;
 
@@ -28,7 +29,7 @@ function Cart() {
   };
 
   const increment = (data: CartItem) => {
-    let newList: CartItem[] = [...cartItems].map((item: CartItem) => {
+    let newList: CartItem[] = cartItems.map((item: CartItem) => {
       if (item.product.name === data.product.name) {
         let cartItem = new CartItem(
           item.id,
@@ -45,7 +46,7 @@ function Cart() {
   };
 
   const decrement = (data: CartItem) => {
-    let newList = [...cartItems]
+    let newList = cartItems
       .map((item: CartItem) => {
         if (item.product.name === data.product.name) {
           let cartItem = new CartItem(

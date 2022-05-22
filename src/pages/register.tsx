@@ -33,16 +33,22 @@ function Register() {
     console.log(user);
     const { mail, psd, addr } = user;
     const auth = getAuth();
+
     createUserWithEmailAndPassword(auth, mail, psd)
       .then(async (userCredential) => {
         console.log("Registered");
         try {
+          const userRef = doc(
+            db,
+            "users",
+            userCredential.user.uid
+          ).withConverter(userConverter);
+
           await setDoc(
-            doc(db, "users", userCredential.user.uid).withConverter(
-              userConverter
-            ),
+            userRef,
             new User(userCredential.user.uid, "Raveen", mail, addr)
           );
+
           navigate("/");
         } catch (e) {
           console.error("Error adding document: ", e);

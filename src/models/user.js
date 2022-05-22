@@ -19,6 +19,6 @@ export const userConverter = {
   },
   fromFirestore: (snapshot, options) => {
     const data = snapshot.data(options);
-    return new User(data.uid, data.name, data.mail, data.address);
+    return new User(snapshot.id, data.name, data["mail"], data.address);
   },
 };

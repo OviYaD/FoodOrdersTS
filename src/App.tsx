@@ -26,6 +26,7 @@ function App() {
       if (user) {
         // get user details.
         const userInfo = await getUser(user.uid);
+        console.log("User", userInfo);
         if (userInfo) setUserInfo(userInfo);
 
         // get products

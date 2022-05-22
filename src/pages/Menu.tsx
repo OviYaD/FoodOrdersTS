@@ -7,16 +7,12 @@ import CheckNavbar from "./components/checkNavbar";
 import RestaurantMenu from "./components/RestaurantMenu";
 
 function Menu() {
-  //console.log("menu rendered");
-  // navbar scrollup and down logic
-  //let prev= window.scrollY;
   const list: CartItem[] = useRecoilValue(cartItemsState);
   return (
     <div>
       <CheckNavbar />
       <RestaurantMenu />
-      {list && (list.length > 0 ? <Cart /> : <></>)}
-      {/* <Cart /> */}
+      {list.length > 0 ? <Cart /> : <></>}
     </div>
   );
 }

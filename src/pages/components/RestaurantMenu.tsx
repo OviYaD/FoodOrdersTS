@@ -16,7 +16,7 @@ function RestaurantMenu() {
         </div>
         <div className="menuCardWrapper d-flex flex-wrap">
           {products.breakfast.map((i: any) => (
-            <MenuCard data={i} key={i.name} />
+            <MenuCard data={i} key={i.id} />
           ))}
         </div>
       </div>
@@ -28,7 +28,7 @@ function RestaurantMenu() {
         </div>
         <div className="menuCardWrapper d-flex flex-wrap">
           {products.lunch.map((i: any) => (
-            <MenuCard data={i} key={i.name} />
+            <MenuCard data={i} key={i.id} />
           ))}
         </div>
       </div>
@@ -40,7 +40,7 @@ function RestaurantMenu() {
         </div>
         <div className="menuCardWrapper d-flex flex-wrap">
           {products.dinner.map((i: any) => (
-            <MenuCard data={i} key={i.name} />
+            <MenuCard data={i} key={i.id} />
           ))}
         </div>
       </div>

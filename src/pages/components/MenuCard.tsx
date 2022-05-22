@@ -8,12 +8,12 @@ import { cartItemsState, userInfoState } from "../../recoil/atoms";
 function MenuCard({ data }: any) {
   const [cartItems, setCartItems] = useRecoilState(cartItemsState);
   const userInfo = useRecoilValue(userInfoState);
-
   const onAddToCart = async (data: Product) => {
     let itemFound = false;
     let cartItem: CartItem;
-    let newList = [...cartItems].map((item: CartItem) => {
-      if (item.product.name === data.name) {
+
+    let newList = cartItems.map((item: CartItem) => {
+      if (item.product.id === data.id) {
         itemFound = true;
         cartItem = new CartItem(
           item.id,
@@ -22,14 +22,15 @@ function MenuCard({ data }: any) {
           item.uid
         );
         return cartItem;
-      } else return item;
+      } else {
+        return item;
+      }
     });
 
     if (!itemFound) {
-      console.log("Hello");
       cartItem = new CartItem("", data, 1, userInfo.id);
-      newList.push(cartItem);
       await addToCart(cartItem);
+      newList.push(cartItem);
     } else {
       console.log(cartItem!);
       await updateCartItem(cartItem!);
@@ -49,16 +50,15 @@ function MenuCard({ data }: any) {
   return (
     <>
       <div
-        key={data.name}
+        key={data.id}
         className="menuCard d-flex justify-content-between flex-wrap"
       >
         <div className="d-flex flex-column itemDescription">
           <div>
-            <div className="h5">{data.itemName}</div>
+            <div className="h5">{data.name}</div>
             <div>
-              {colorCircle} {data.type}
+              {colorCircle} {data.type.toUpperCase()}
             </div>
-            <div>{data.name ?? ""}</div>
           </div>
           <div className="py-2">&#8377;{`${data.price}.00`}</div>
           <button

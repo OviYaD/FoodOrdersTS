@@ -16,7 +16,6 @@ import { User, userConverter } from "./models/user";
 import { Product, productConverter } from "./models/product";
 import { cartItemConverter } from "./models/cartItem";
 import { db } from "./firebase";
-import { async } from "@firebase/util";
 
 const userCollectionRef = collection(db, "users").withConverter(userConverter);
 const productCollectionRef = collection(db, "products").withConverter(
@@ -29,8 +28,9 @@ const cartCollectionRef = collection(db, "cart").withConverter(
 export async function getUser(uid: string): Promise<User | null> {
   const docRef = doc(db, "users", uid).withConverter(userConverter);
   const docSnap = await getDoc(docRef);
+
   if (docSnap.exists()) {
-    const user = docSnap.data();
+    const user: User = docSnap.data();
     user.id = docSnap.id;
     console.log("Document data:", user);
     return user;
@@ -77,8 +77,6 @@ export async function getCartItems(uid: string): Promise<CartItem[]> {
   querySnapshot.forEach((doc) => {
     // get the cart item
     const cartItem: CartItem = doc.data();
-    cartItem.id = doc.id;
-
     cartItems.push(cartItem);
   });
   return cartItems;
@@ -98,13 +96,8 @@ export async function updateCartItem(cartItem: CartItem) {
   if (cartItem.quantity > 0) {
     await setDoc(cartDocumentRef, cartItem.toMap());
   } else {
-    await deleteCartItem(cartItem);
+    await deleteDoc(cartDocumentRef);
   }
-}
-
-export async function deleteCartItem(cartItem: CartItem) {
-  const cartDocumentRef: DocumentReference = doc(db, "cart", cartItem.id);
-  await deleteDoc(cartDocumentRef);
 }
 
 export async function clearCart(cartItems: CartItem[]) {
