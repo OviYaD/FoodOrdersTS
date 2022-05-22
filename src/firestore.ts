@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   DocumentReference,
   getDoc,
@@ -94,7 +95,16 @@ export async function addToCart(cartItem: CartItem): Promise<CartItem> {
 
 export async function updateCartItem(cartItem: CartItem) {
   const cartDocumentRef: DocumentReference = doc(db, "cart", cartItem.id);
-  await setDoc(cartDocumentRef, cartItem.toMap());
+  if (cartItem.quantity > 0) {
+    await setDoc(cartDocumentRef, cartItem.toMap());
+  } else {
+    await deleteCartItem(cartItem);
+  }
+}
+
+export async function deleteCartItem(cartItem: CartItem) {
+  const cartDocumentRef: DocumentReference = doc(db, "cart", cartItem.id);
+  await deleteDoc(cartDocumentRef);
 }
 
 export async function clearCart(cartItems: CartItem[]) {

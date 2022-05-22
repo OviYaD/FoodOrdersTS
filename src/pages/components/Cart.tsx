@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { clearCart } from "../../firestore";
+import { clearCart, updateCartItem } from "../../firestore";
 import { CartItem } from "../../models/cartItem";
 import { cartItemsState } from "../../recoil/atoms";
 
@@ -36,6 +36,8 @@ function Cart() {
           item.quantity + 1,
           item.uid
         );
+
+        updateCartItem(cartItem);
         return cartItem;
       } else return item;
     });
@@ -52,6 +54,7 @@ function Cart() {
             item.quantity - 1,
             item.uid
           );
+          updateCartItem(cartItem);
           return cartItem;
         } else return item;
       })
