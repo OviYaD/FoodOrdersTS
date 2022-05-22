@@ -1,9 +1,13 @@
 import { getAuth } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { cartItemsState, userInfoState } from "../../recoil/atoms";
 
 function LoggedNavbar() {
   const navigate = useNavigate();
-  const totalItems = 50;
+  // const user = useRecoilValue(userInfoState);
+  const cartItems = useRecoilValue(cartItemsState);
+  const totalItems = cartItems.length;
   //console.log("loggedbar rendered");
 
   const logOut = () => {
@@ -41,7 +45,7 @@ function LoggedNavbar() {
               className="position-absolute translate-middle badge rounded-circle bg-danger"
               style={{ fontSize: ".45em" }}
             >
-              {totalItems}
+              {totalItems ? totalItems : ""}
             </span>
           </i>
         </div>

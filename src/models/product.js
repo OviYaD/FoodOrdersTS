@@ -1,5 +1,6 @@
 export class Product {
-  constructor(name = "", price = 0, category = [], type = "") {
+  constructor(id = "", name = "", price = 0, category = [], type = "") {
+    this.id = id;
     this.name = name;
     this.price = price;
     this.category = category;
@@ -10,6 +11,7 @@ export class Product {
   }
   toMap() {
     return {
+      prod_id: this.id,
       name: this.name,
       price: this.price,
       category: this.category,
@@ -31,6 +33,7 @@ export const productConverter = {
   fromFirestore: (snapshot, options) => {
     const data = snapshot.data(options);
     return new Product(
+      "",
       data.product_name,
       data.price,
       data.category,

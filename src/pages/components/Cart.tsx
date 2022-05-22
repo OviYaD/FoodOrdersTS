@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { CartItem } from "../models/cartItem";
-import { cartItemsState } from "../recoil/atoms";
+import { clearCart } from "../../firestore";
+import { CartItem } from "../../models/cartItem";
+import { cartItemsState } from "../../recoil/atoms";
 
 function Cart() {
   //console.log("Cart rendered");
@@ -20,32 +21,42 @@ function Cart() {
     (document.getElementById("clrCart") as HTMLElement).classList.add("vs");
   };
 
-  const clearCart = () => {
+  const onClearCart = async () => {
     (document.getElementById("clrCart") as HTMLElement).classList.remove("vs");
+    await clearCart(cartItems);
     setCartItems([]);
   };
+
   const increment = (data: CartItem) => {
-    let newList = [...cartItems].map((item: CartItem) => {
+    let newList: CartItem[] = [...cartItems].map((item: CartItem) => {
       if (item.product.name === data.product.name) {
-        return {
-          ...item,
-          quantity: item.quantity + 1,
-        };
+        let cartItem = new CartItem(
+          item.id,
+          item.product,
+          item.quantity + 1,
+          item.uid
+        );
+        return cartItem;
       } else return item;
     });
     setCartItems(newList);
   };
+
   const decrement = (data: CartItem) => {
     let newList = [...cartItems]
       .map((item: CartItem) => {
         if (item.product.name === data.product.name) {
-          return {
-            ...item,
-            quantity: item.quantity - 1,
-          };
+          let cartItem = new CartItem(
+            item.id,
+            item.product,
+            item.quantity - 1,
+            item.uid
+          );
+          return cartItem;
         } else return item;
       })
       .filter((item: CartItem) => item.quantity !== 0);
+
     setCartItems(newList);
   };
   const authorize = () => {
@@ -75,7 +86,7 @@ function Cart() {
                   className="btn btn-outline-danger invisible me-2"
                   data-bs-dismiss="offcanvas"
                   data-bs-target="#offcanvasBottom"
-                  onClick={clearCart}
+                  onClick={onClearCart}
                 >
                   Clear Cart
                 </button>
@@ -116,7 +127,7 @@ function Cart() {
             <table className="table">
               <tbody>
                 {cartItems.map((l: CartItem) => (
-                  <tr key={l.product.name}>
+                  <tr key={l.id}>
                     <td className="h5">
                       <span>
                         <i

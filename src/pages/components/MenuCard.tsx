@@ -1,26 +1,39 @@
 import React from "react";
-import { useRecoilState } from "recoil";
-import { CartItem } from "../models/cartItem";
-import { Product } from "../models/product";
-import { cartItemsState } from "../recoil/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { addToCart, updateCartItem } from "../../firestore";
+import { CartItem } from "../../models/cartItem";
+import { Product } from "../../models/product";
+import { cartItemsState, userInfoState } from "../../recoil/atoms";
 
 function MenuCard({ data }: any) {
   const [cartItems, setCartItems] = useRecoilState(cartItemsState);
+  const userInfo = useRecoilValue(userInfoState);
 
-  const addToCart = (data: Product) => {
+  const onAddToCart = async (data: Product) => {
     let itemFound = false;
+    let cartItem: CartItem;
     let newList = [...cartItems].map((item: CartItem) => {
       if (item.product.name === data.name) {
         itemFound = true;
-        return {
-          ...item,
-          quantity: item.quantity + 1,
-        };
+        cartItem = new CartItem(
+          item.id,
+          item.product,
+          item.quantity + 1,
+          item.uid
+        );
+        return cartItem;
       } else return item;
     });
 
-    if (!itemFound) newList.push(new CartItem(data, 1));
-
+    if (!itemFound) {
+      console.log("Hello");
+      cartItem = new CartItem("", data, 1, userInfo.id);
+      newList.push(cartItem);
+      await addToCart(cartItem);
+    } else {
+      console.log(cartItem!);
+      await updateCartItem(cartItem!);
+    }
     setCartItems(newList);
   };
 
@@ -38,7 +51,6 @@ function MenuCard({ data }: any) {
       <div
         key={data.name}
         className="menuCard d-flex justify-content-between flex-wrap"
-        onClick={() => addToCart(data)}
       >
         <div className="d-flex flex-column itemDescription">
           <div>
@@ -52,7 +64,7 @@ function MenuCard({ data }: any) {
           <button
             type="button"
             className="btn btn-outline-warning mt-auto p-2 w-50 addCart"
-            onClick={() => addToCart(data)}
+            onClick={() => onAddToCart(data)}
           >
             Add to cart
           </button>

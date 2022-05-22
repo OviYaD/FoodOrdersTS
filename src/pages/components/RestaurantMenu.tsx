@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { productState } from "../recoil/atoms";
+import { productState } from "../../recoil/atoms";
 import MenuCard from "./MenuCard";
 
 function RestaurantMenu() {
