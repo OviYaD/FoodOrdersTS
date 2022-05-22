@@ -13,6 +13,7 @@ import {
 } from "./recoil/atoms";
 import Menu from "./pages/Menu";
 import { getCartItems, getProducts, getUser } from "./firestore";
+import AddProducts from "./pages/components/AddProducts";
 
 function App() {
   const [isLoggedIn, setIsLoggedin] = useRecoilState(loginState);
@@ -52,6 +53,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/menu" element={<Menu />}></Route>
+        <Route path="/addproducts" element={<AddProducts />}></Route>
       </Routes>
     </BrowserRouter>
   );

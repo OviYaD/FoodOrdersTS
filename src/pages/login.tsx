@@ -33,6 +33,12 @@ function Login() {
   };
   return (
     <>
+      <img
+        className="img-fluid col-md-12 bg obj-fit-cover"
+        style={{ minHeight: "100vh" }}
+        src="https://i.pinimg.com/originals/33/ef/8b/33ef8b9c0b902154a6cd4103a21275ef.jpg"
+        alt=""
+      />
       <form className="form1" onSubmit={onLogin}>
         <h2>Login</h2>
         <br />
