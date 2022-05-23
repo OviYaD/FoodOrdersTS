@@ -7,7 +7,7 @@ function HomeInfoCardContainer() {
     <div className="">
       <img
         className="img-fluid col-md-12 bg obj-fit-cover"
-        height={"800vh"}
+        style={{ minHeight: "100vh" }}
         src="https://i.pinimg.com/originals/33/ef/8b/33ef8b9c0b902154a6cd4103a21275ef.jpg"
         alt=""
       />

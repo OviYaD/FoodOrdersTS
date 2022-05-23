@@ -25,8 +25,8 @@ function LoggedNavbar() {
             alt="nav-logo"
             className="img-fluid d-inline-block align-baseline me-2"
           />
-          <span className="nav-title">Yumi</span>
-          <span className="nav-title-to">to</span>
+          <span className="nav-title">Food</span>
+          <span className="nav-title-to">Cart</span>
         </Link>
       </nav>
 

@@ -70,97 +70,105 @@ function AddProducts() {
     }
   };
   return (
-    <form className="form1" onSubmit={registerMe}>
-      <h2>ADD PRODUCTS</h2>
-      <br />
-      <div className="d-flex flex-column">
-        <div className="form-group">
+    <>
+      <img
+        className="img-fluid col-md-12 bg obj-fit-cover"
+        style={{ minHeight: "100vh" }}
+        src="https://i.pinimg.com/originals/33/ef/8b/33ef8b9c0b902154a6cd4103a21275ef.jpg"
+        alt=""
+      />
+      <form className="form1" onSubmit={registerMe}>
+        <h2>ADD PRODUCTS</h2>
+        <br />
+        <div className="d-flex flex-column">
           <div className="form-group">
-            <label htmlFor="item" className="form-label m-2 h5">
-              Food Item:
-            </label>
-            <input
-              type="text"
-              name="item"
-              placeholder="Food Item"
-              className="form-control"
-              value={user.item}
-              onChange={changeMe}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="type" className="form-label m-2 h5">
-              Food Type:
-            </label>
-            <input
-              type="text"
-              name="type"
-              placeholder="Veg or Non-veg"
-              className="form-control"
-              value={user.type}
-              onChange={changeMe}
-              required
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="item" className="form-label m-2 h5">
+                Food Item:
+              </label>
+              <input
+                type="text"
+                name="item"
+                placeholder="Food Item"
+                className="form-control"
+                value={user.item}
+                onChange={changeMe}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="type" className="form-label m-2 h5">
+                Food Type:
+              </label>
+              <input
+                type="text"
+                name="type"
+                placeholder="Veg or Non-veg"
+                className="form-control"
+                value={user.type}
+                onChange={changeMe}
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="password" className="form-label m-2 h5">
-              Price:
+            <div className="form-group">
+              <label htmlFor="password" className="form-label m-2 h5">
+                Price:
+              </label>
+              <input
+                type="text"
+                name="price"
+                placeholder="price"
+                className="form-control"
+                value={user.price}
+                onChange={changeMe}
+                required
+              />
+            </div>
+            <div className="form-group"></div>
+            <label htmlFor="address" className="form-label m-2 h5">
+              Category:
             </label>
+            <br />
             <input
-              type="text"
-              name="price"
-              placeholder="price"
-              className="form-control"
-              value={user.price}
-              onChange={changeMe}
-              required
+              type="checkbox"
+              id="0"
+              name="breakfast"
+              value="breakfast"
+              onChange={() => handleOnChange("breakfast")}
             />
+            <label htmlFor="0" className="form-label m-2 h5">
+              breakfast
+            </label>
+            <br />
+
+            <input
+              type="checkbox"
+              id="1"
+              name="lunch"
+              value="lunch"
+              onChange={() => handleOnChange("lunch")}
+            />
+            <label htmlFor="1" className="form-label m-2 h5">
+              Lunch
+            </label>
+            <br />
+
+            <input
+              type="checkbox"
+              id="2"
+              name="dinner"
+              value="dinner"
+              onChange={() => handleOnChange("dinner")}
+            />
+            <label htmlFor="2" className="form-label m-2 h5">
+              Dinner
+            </label>
           </div>
-          <div className="form-group"></div>
-          <label htmlFor="address" className="form-label m-2 h5">
-            Category:
-          </label>
-          <br />
-          <input
-            type="checkbox"
-            id="0"
-            name="breakfast"
-            value="breakfast"
-            onChange={() => handleOnChange("breakfast")}
-          />
-          <label htmlFor="0" className="form-label m-2 h5">
-            breakfast
-          </label>
-          <br />
-
-          <input
-            type="checkbox"
-            id="1"
-            name="lunch"
-            value="lunch"
-            onChange={() => handleOnChange("lunch")}
-          />
-          <label htmlFor="1" className="form-label m-2 h5">
-            Lunch
-          </label>
-          <br />
-
-          <input
-            type="checkbox"
-            id="2"
-            name="dinner"
-            value="dinner"
-            onChange={() => handleOnChange("dinner")}
-          />
-          <label htmlFor="2" className="form-label m-2 h5">
-            Dinner
-          </label>
+          <button className="btn btn-primary my-3 h4">ADD PRODUCT</button>
         </div>
-        <button className="btn btn-primary my-3 h4">ADD PRODUCT</button>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 
