@@ -16,6 +16,7 @@ import { getCartItems, getProducts, getUser } from "./firestore";
 import AddProducts from "./pages/components/AddProducts";
 import EditUser from "./pages/components/editProfile";
 import UserDetails from "./pages/UserDetails";
+import CheckOut from "./pages/components/checkOut";
 
 function App() {
   const [isLoggedIn, setIsLoggedin] = useRecoilState(loginState);
@@ -58,6 +59,7 @@ function App() {
         <Route path="/addproducts" element={<AddProducts />}></Route>
         <Route path="/editprofile" element={<EditUser />}></Route>
         <Route path="/addDetails" element={<UserDetails />}></Route>
+        <Route path="/checkout" element={<CheckOut />}></Route>
       </Routes>
     </BrowserRouter>
   );

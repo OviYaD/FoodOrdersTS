@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import { userInfoState } from "../../recoil/atoms";
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import { collection, getDocs, addDoc, doc, setDoc } from "firebase/firestore";
 import { User, userConverter } from "../../models/user";
