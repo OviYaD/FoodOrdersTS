@@ -5,12 +5,15 @@ import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { User, userConverter } from "../models/user";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "../recoil/atoms";
 
-function Register() {
+function UserDetails() {
+  const userInfo = useRecoilValue(userInfoState);
   const [user, setUser] = useState({
-    uname: "",
-    mail: "admin@gmail.com",
-    psd: "123456",
+    aadhaar: "",
+    contact: "",
+    address: "",
   });
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
@@ -28,37 +31,33 @@ function Register() {
     color: "green",
   };
   const fail = { padding: "10px 15px", border: "1px solid red", color: "red" };
-  const registerMe = async (e: any) => {
+  const addDetails = async (e: any) => {
     e.preventDefault();
     console.log(user);
-    const { uname, mail, psd } = user;
+    const { aadhaar, contact, address } = user;
     const auth = getAuth();
 
-    createUserWithEmailAndPassword(auth, mail, psd)
-      .then(async (userCredential) => {
-        console.log("Registered");
-        try {
-          const userRef = doc(
-            db,
-            "users",
-            userCredential.user.uid
-          ).withConverter(userConverter);
+    try {
+      const userRef = doc(db, "users", userInfo?.id).withConverter(
+        userConverter
+      );
 
-          await setDoc(
-            userRef,
-            new User(userCredential.user.uid, uname, mail, "", "", "")
-          );
+      await setDoc(
+        userRef,
+        new User(
+          userInfo?.id,
+          userInfo?.name,
+          userInfo?.mail,
+          address,
+          aadhaar,
+          contact
+        )
+      );
 
-          navigate("/addDetails");
-        } catch (e) {
-          console.error("Error adding document: ", e);
-        }
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setMsg(errorMessage);
-      });
+      navigate("/");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
   return (
     <>
@@ -68,69 +67,58 @@ function Register() {
         src="https://i.pinimg.com/originals/33/ef/8b/33ef8b9c0b902154a6cd4103a21275ef.jpg"
         alt=""
       />
-      <form className="form1" onSubmit={registerMe}>
+      <form className="form1" onSubmit={addDetails}>
         <h2>Register Form</h2>
         <br />
         <div className="d-flex flex-column">
           <div className="form-group">
             <div className="form-group">
-              <label htmlFor="email" className="form-label m-2 h5">
-                Name
+              <label htmlFor="aadhaar" className="form-label m-2 h5">
+                Aadhaar Number:
               </label>
               <input
                 type="text"
-                name="uname"
-                placeholder="Name"
+                name="aadhaar"
+                placeholder="Aadhaar Number"
                 className="form-control"
-                value={user.uname}
+                value={user.aadhaar}
                 onChange={changeMe}
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="email" className="form-label m-2 h5">
-                Email
+              <label htmlFor="conatct" className="form-label m-2 h5">
+                Contact
               </label>
               <input
-                type="email"
-                name="mail"
-                placeholder="Email"
+                type="text"
+                name="contact"
+                placeholder="Contact Number"
                 className="form-control"
-                value={user.mail}
+                value={user.contact}
                 onChange={changeMe}
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password" className="form-label m-2 h5">
-                Password
+              <label htmlFor="address" className="form-label m-2 h5">
+                Address
               </label>
-              <input
-                type="password"
-                name="psd"
-                placeholder="Password"
+              <textarea
+                name="address"
+                placeholder="Address"
                 className="form-control"
-                value={user.psd}
+                value={user.address}
                 onChange={changeMe}
                 required
               />
             </div>
           </div>
-          <button className="btn btn-primary my-3 h4">Sign Up</button>
-          <div
-            className="h5 text-center"
-            style={msg === "" ? {} : msg.includes("Success") ? success : fail}
-          >
-            {msg}
-          </div>
-          <hr />
-          <span>
-            Already have an account? | <Link to="/login">Sign in</Link>
-          </span>
+          <button className="btn btn-primary my-3 h4">ADD</button>
         </div>
       </form>
     </>
   );
 }
 
-export default Register;
+export default UserDetails;

@@ -14,6 +14,8 @@ import {
 import Menu from "./pages/Menu";
 import { getCartItems, getProducts, getUser } from "./firestore";
 import AddProducts from "./pages/components/AddProducts";
+import EditUser from "./pages/components/editProfile";
+import UserDetails from "./pages/UserDetails";
 
 function App() {
   const [isLoggedIn, setIsLoggedin] = useRecoilState(loginState);
@@ -27,8 +29,8 @@ function App() {
       if (user) {
         // get user details.
         const userInfo = await getUser(user.uid);
-        console.log("User", userInfo);
         if (userInfo) setUserInfo(userInfo);
+        console.log("user information: " + userInfo?.name);
 
         // get products
         const products = await getProducts();
@@ -37,7 +39,7 @@ function App() {
         // get cart items
         const cartItems = await getCartItems(user.uid);
         setCartItems(cartItems);
-        console.log(cartItems);
+        // console.log(cartItems);
         setIsLoggedin(true);
       } else {
         console.log("logged out");
@@ -54,6 +56,8 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/menu" element={<Menu />}></Route>
         <Route path="/addproducts" element={<AddProducts />}></Route>
+        <Route path="/editprofile" element={<EditUser />}></Route>
+        <Route path="/addDetails" element={<UserDetails />}></Route>
       </Routes>
     </BrowserRouter>
   );

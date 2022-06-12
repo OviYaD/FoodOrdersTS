@@ -51,7 +51,7 @@ export async function getProducts() {
     // get the product
     const prod: Product = doc.data();
     prod.id = doc.id;
-    console.log(prod);
+    // console.log(prod);
 
     // add the product to the correct category
     if (prod.category.includes("breakfast")) {
@@ -64,7 +64,7 @@ export async function getProducts() {
       products.dinner.push(prod);
     }
   });
-  console.log(products);
+  // console.log(products);
   return products;
 }
 
