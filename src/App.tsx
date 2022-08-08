@@ -17,6 +17,11 @@ import AddProducts from "./pages/components/AddProducts";
 import EditUser from "./pages/components/editProfile";
 import UserDetails from "./pages/UserDetails";
 import CheckOut from "./pages/components/checkOut";
+import Test from "./pages/components/test";
+import VendorHome from "./pages/components/Vendor/vendorHomeInfo";
+import AdminHome from "./pages/components/Admin/adminHome";
+import VendorList from "./pages/components/Admin/vendorList";
+import UserList from "./pages/components/Admin/UserList";
 
 function App() {
   const [isLoggedIn, setIsLoggedin] = useRecoilState(loginState);
@@ -60,6 +65,11 @@ function App() {
         <Route path="/editprofile" element={<EditUser />}></Route>
         <Route path="/addDetails" element={<UserDetails />}></Route>
         <Route path="/checkout" element={<CheckOut />}></Route>
+        <Route path="/Test" element={<Test />}></Route>
+        <Route path="/vendorHome" element={<VendorHome />}></Route>
+        <Route path="/adminHome" element={<AdminHome />}></Route>
+        <Route path="/vendorList" element={<VendorList />}></Route>
+        <Route path="/userList" element={<UserList />}></Route>
       </Routes>
     </BrowserRouter>
   );

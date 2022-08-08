@@ -31,6 +31,7 @@ function Footer() {
             >
               Contact Us
             </div>
+
             <Link to="/menu" className="nav-link px-2 text-light">
               Menu
             </Link>

@@ -36,6 +36,7 @@ function Register() {
 
     createUserWithEmailAndPassword(auth, mail, psd)
       .then(async (userCredential) => {
+        // userCredential.user.sendEmailVerification();
         console.log("Registered");
         try {
           const userRef = doc(
