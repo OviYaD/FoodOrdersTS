@@ -1,0 +1,173 @@
+html {
+    height: 100%;
+  }
+  body {
+    margin:0;
+    padding:0;
+    font-family: sans-serif;
+    background: linear-gradient(#6b6b6b, #c9a4a2);
+  }
+  
+  .report-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+  
+  .report-box h2 {
+    position: absolute;
+    top: -240%;
+    left: 20%;
+    margin: 0 0 30px;
+    padding: 0;
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    text-align: center;
+  }
+  
+  .report-box .user-box {
+    position: relative;
+  }
+  
+  .report-box .user-box input {
+    width: 100%;
+    padding: 5px 0;
+    font-size: 20px;
+    color: rgb(149, 18, 18);
+    margin-bottom: 25px;
+    margin-top: 15px;
+    border: none;
+    border-bottom: 1px solid rgb(16, 135, 12);
+    outline: none;
+    background: transparent;
+  }
+  .report-box .user-box label {
+    position: absolute;
+    top:0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 6px;
+    color: rgb(226, 182, 9);
+    pointer-events: none;
+    transition: .5s;
+  }
+  
+  .report-box .user-box input:focus ~ label,
+  .report-box .user-box input:valid ~ label {
+    top: -30px;
+    left: 0;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    color: #070707;
+    font-size: 24px;
+  }
+  
+  .report-box form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #0a0a0a;
+    font-size: 28px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    margin-top: 40px;
+    letter-spacing: 4px
+  }
+  
+  .report-box a:hover {
+    background: #f40303;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #f40303,
+                0 0 25px #f40303,
+                0 0 50px #f40303,
+                0 0 100px #f40303;
+  }
+  
+  .report-box a span {
+    position: absolute;
+    display: block;
+  }
+  
+  .report-box a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f40303);
+    animation: btn-anim1 1s linear infinite;
+  }
+  
+  @keyframes btn-anim1 {
+    0% {
+      left: -100%;
+    }
+    50%,100% {
+      left: 100%;
+    }
+  }
+  
+  .report-box a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #f40303);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+  }
+  
+  @keyframes btn-anim2 {
+    0% {
+      top: -100%;
+    }
+    50%,100% {
+      top: 100%;
+    }
+  }
+  
+  .report-box a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #f40303);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+  }
+  
+  @keyframes btn-anim3 {
+    0% {
+      right: -100%;
+    }
+    50%,100% {
+      right: 100%;
+    }
+  }
+  
+  .report-box a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #f40303);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+  }
+  
+  @keyframes btn-anim4 {
+    0% {
+      bottom: -100%;
+    }
+    50%,100% {
+      bottom: 100%;
+    }
+  }
+  
